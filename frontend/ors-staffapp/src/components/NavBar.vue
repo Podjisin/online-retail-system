@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-navigation-drawer v-model="navBar.drawer" temporary>
+    <v-navigation-drawer v-model="navBar.drawer">
       <v-list>
         <v-list-item
           prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
@@ -42,7 +42,7 @@ export default {
     loading: true,
 
     navBar: {
-      drawer: null,
+      drawer: false,
       items: [],
     },
   }),
@@ -55,11 +55,9 @@ export default {
     "appStore.navigatorBar.drawer": {
       immediate: true,
       handler(value) {
-        if (value === true) {
-          this.navBar.drawer = true;
-        } else {
-          this.navBar.drawer = false;
-        }
+        const newVal = JSON.parse(value);
+        // console.log("Header Bar | Watcher | New Value: ", newVal);
+        this.navBar.drawer = newVal;
       },
     },
   },
@@ -67,8 +65,9 @@ export default {
   methods: {
     async setDrawerVisibility() {
       const appStore = useAppStore();
-      const value = !this.navBar.drawer;
-      appStore.setNavigatorBarDrawer(value);
+      const oldVal = JSON.parse(appStore.navigatorBar.drawer);
+      const newVal = !oldVal;
+      appStore.setNavigatorBarDrawer(newVal);
     },
 
     navItemClick(item) {
@@ -79,8 +78,7 @@ export default {
     },
   },
 
-  created() {
-    this.navBar.drawer = false;
+  mounted() {
     this.navBar.items = useAppStore().navigatorBar.items;
   },
 };

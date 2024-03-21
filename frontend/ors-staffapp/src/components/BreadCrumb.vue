@@ -4,6 +4,7 @@
       {{ item.title }}
     </template>
   </v-breadcrumbs>
+  <v-divider thickness="2" class="py-2" color="secondary"> </v-divider>
 </template>
 
 <script>
@@ -22,7 +23,7 @@ export default {
   },
   methods: {
     updateBreadcrumbs() {
-      console.log("Current route:", this.$route);
+      // console.log("Current route:", this.$route);
       const matchedRoutes = this.$route.matched.filter(
         (route) => route.meta && route.meta.breadcrumb
       );

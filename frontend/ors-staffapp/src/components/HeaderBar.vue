@@ -2,19 +2,14 @@
   <v-card>
     <v-toolbar color="primary" image="../assets/banner2.jpg">
       <v-app-bar-nav-icon @click="setDrawerVisibility()"></v-app-bar-nav-icon>
-
-      <v-toolbar-title loading>
+      <v-toolbar-title>
         {{ headerBar.title }}
       </v-toolbar-title>
-
       <v-btn
         :icon="theme.switch ? 'mdi-weather-sunny' : 'mdi-weather-night'"
         @click="toggleTheme"
       ></v-btn>
-
       <v-btn icon="mdi-logout" @click="dialog.model = true"></v-btn>
-
-      <!-- theme switch -->
     </v-toolbar>
   </v-card>
   <div>
@@ -103,14 +98,16 @@ export default {
   watch: {
     "appStore.headerBar.title"(newValue) {
       this.headerBar.title = newValue;
+      console.log("Header Bar | Watcher | New Title: ", newValue);
     },
   },
 
   methods: {
     async setDrawerVisibility() {
       const appStore = useAppStore();
-      const oldVal = appStore.navigatorBar.drawer;
+      const oldVal = JSON.parse(appStore.navigatorBar.drawer);
       const newVal = !oldVal;
+      console.log("Header Bar | setDrawerVisibility | Old Value: ", oldVal);
       appStore.setNavigatorBarDrawer(newVal);
     },
 

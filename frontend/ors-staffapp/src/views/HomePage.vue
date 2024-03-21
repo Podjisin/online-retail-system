@@ -76,6 +76,9 @@ export default {
     const appStore = useAppStore();
     this.theme = appStore.theme;
 
+    const val = JSON.parse(appStore.navigatorBar.drawer);
+    console.log("Drawer Value: ", val);
+
     if (LogInState) {
       this.loading = false;
       this.isLoggedIn = true;
