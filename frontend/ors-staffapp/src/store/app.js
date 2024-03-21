@@ -103,8 +103,8 @@ export const useAppStore = defineStore("app", {
 
     setNavigatorBarDrawer(boolean) {
       this.navigatorBar.drawer = boolean;
-      localStorage.setItem("navigatorBarDrawer", boolean);
-      console.log("Navigator Bar Drawer: " + this.navigatorBar.drawer);
+      // localStorage.setItem("navigatorBarDrawer", boolean);
+      localStorage.setItem("navigatorBarDrawer", JSON.stringify(boolean));
     },
 
     setNavigatorBarRail(boolean) {
