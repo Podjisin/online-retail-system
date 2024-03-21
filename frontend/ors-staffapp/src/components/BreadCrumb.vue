@@ -13,8 +13,11 @@ export default {
   }),
 
   watch: {
-    $router() {
-      this.updateBreadcrumbs();
+    $route: {
+      immediate: true,
+      handler() {
+        this.updateBreadcrumbs();
+      },
     },
   },
   methods: {
@@ -23,7 +26,7 @@ export default {
       const matchedRoutes = this.$route.matched.filter(
         (route) => route.meta && route.meta.breadcrumb
       );
-      console.log("Matched routes:", matchedRoutes);
+      //   console.log("Matched routes:", matchedRoutes);
       this.items = matchedRoutes.map((route) => {
         return {
           title: route.meta.breadcrumb,
@@ -32,7 +35,7 @@ export default {
         };
       });
 
-      console.log("items:", this.items);
+      //   console.log("items:", this.items);
     },
   },
 

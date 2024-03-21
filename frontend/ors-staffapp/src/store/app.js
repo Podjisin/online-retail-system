@@ -3,6 +3,8 @@ import { defineStore } from "pinia";
 
 export const useAppStore = defineStore("app", {
   state: () => ({
+    theme: localStorage.getItem("theme") || "light",
+
     headerBar: {
       title: localStorage.getItem("headerBarTitle") || "Dashboard",
       subtitle: localStorage.getItem("headerBarSubtitle") || "",
@@ -13,7 +15,7 @@ export const useAppStore = defineStore("app", {
       title: localStorage.getItem("navigatorBarTitle") || null,
       subtitle: localStorage.getItem("navigatorBarSubtitle") || null,
 
-      drawer: false,
+      drawer: localStorage.getItem("navigatorBarDrawer") || false,
       rail: false,
 
       indexFocus: 0,
@@ -25,23 +27,22 @@ export const useAppStore = defineStore("app", {
           to: {
             name: "DashboardPage",
           },
-          onClick: async () => {
-            console.log("Dashboard clicked");
-            const appStore = useAppStore();
-            appStore.setHeaderBarTitle("Dashboard");
+          onClick: () => {
+            this.headerBar.title =
+              localStorage.setItem("headerBarTitle") || "Dashboard";
           },
         },
-        // {
-        //   title: "Profile",
-        //   icon: "mdi-account",
-        //   to: {
-        //     name: "ProfilePage",
-        //   },
-        //   onClick: () => {
-        //     const appStore = useAppStore();
-        //     appStore.setHeaderBarTitle("Profile");
-        //   },
-        // },
+        {
+          title: "Profile",
+          icon: "mdi-account",
+          to: {
+            name: "ProfilePage",
+          },
+          onClick: () => {
+            this.headerBar.title =
+              localStorage.setItem("headerBarTitle") || "Profile";
+          },
+        },
         // {
         //   title: "Settings",
         //   icon: "mdi-cog",
@@ -69,10 +70,15 @@ export const useAppStore = defineStore("app", {
   }),
 
   actions: {
+    toggleTheme(value) {
+      this.theme = value;
+      localStorage.setItem("theme", this.theme);
+    },
+
     setHeaderBarTitle(title) {
       this.headerBar.title = title;
       localStorage.setItem("headerBarTitle", title);
-      console.log("Header Bar Title: " + title);
+      console.log("Header Bar Title: " + this.headerBar.title);
     },
 
     setHeaderBarSubtitle(subtitle) {
@@ -97,6 +103,8 @@ export const useAppStore = defineStore("app", {
 
     setNavigatorBarDrawer(boolean) {
       this.navigatorBar.drawer = boolean;
+      localStorage.setItem("navigatorBarDrawer", boolean);
+      console.log("Navigator Bar Drawer: " + this.navigatorBar.drawer);
     },
 
     setNavigatorBarRail(boolean) {

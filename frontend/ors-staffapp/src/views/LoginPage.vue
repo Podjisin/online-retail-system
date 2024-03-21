@@ -2,7 +2,13 @@
 
 <template>
   <div>
-    <v-sheet class="pa-10" color="secondary" height="100vh" rounded>
+    <v-sheet
+      class="pa-10"
+      color="secondary"
+      height="100vh"
+      rounded
+      :theme="this.theme"
+    >
       <v-img
         alt="Vue.js logo"
         class="mx-auto mb-10"
@@ -92,6 +98,7 @@
 <script>
 import SnackBar from "@/components/SnackBar.vue";
 import { useAppStore, useCredentialsStore } from "@/store/app";
+import { useTheme } from "vuetify/lib/framework.mjs";
 export default {
   data: () => ({
     snackbar: {
@@ -101,6 +108,8 @@ export default {
     },
 
     loading: false,
+
+    theme: "light",
 
     form: {
       model: false,
@@ -160,10 +169,22 @@ export default {
       }
     },
 
+    toggleTheme() {
+      const appStore = useAppStore();
+      const theme = useTheme();
+      theme.global.name.value = appStore.theme;
+      console.log(theme.global.name.value);
+    },
+
     async resetFields() {
       this.form.username = "";
       this.form.password = "";
     },
+  },
+
+  created() {
+    const appStore = useAppStore();
+    this.theme = appStore.theme;
   },
 };
 </script>

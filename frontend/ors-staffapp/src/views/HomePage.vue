@@ -1,21 +1,23 @@
 <template>
-  <v-app v-if="!loading">
-    <v-container>
-      <v-row>
-        <v-col>
-          <HeaderBar></HeaderBar>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <NavBar></NavBar>
-          <v-main>
+  <v-app v-if="this.isLoggedIn" :theme="this.theme">
+    <div>
+      <v-container fluid>
+        <v-row>
+          <v-col>
+            <HeaderBar></HeaderBar>
             <BreadCrumb> </BreadCrumb>
-            <router-view></router-view>
-          </v-main>
-        </v-col>
-      </v-row>
-    </v-container>
+            <v-main>
+              <router-view></router-view>
+            </v-main>
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
+
+    <div>
+      <NavBar></NavBar>
+    </div>
+
     <div>
       <SnackBar
         ref="SnackBar"
@@ -32,8 +34,8 @@ import SnackBar from "@/components/SnackBar.vue";
 import HeaderBar from "@/components/HeaderBar.vue";
 import NavBar from "@/components/NavBar.vue";
 import BreadCrumb from "@/components/BreadCrumb.vue";
-import { useCredentialsStore } from "@/store/app";
-// import { useCredentialsStore } from "@/store/app";
+import { useAppStore, useCredentialsStore } from "@/store/app";
+import { mapStores } from "pinia";
 
 export default {
   data: () => ({
@@ -43,7 +45,9 @@ export default {
       color: "info",
     },
 
+    isLoggedIn: false,
     loading: false,
+    theme: "light",
   }),
   components: {
     SnackBar,
@@ -52,14 +56,32 @@ export default {
     BreadCrumb,
   },
 
+  computed: {
+    ...mapStores(useAppStore),
+  },
+
+  watch: {
+    "appStore.theme"(newValue) {
+      this.theme = newValue;
+      console.log("Theme Changed:", newValue);
+    },
+  },
+
   created() {
     this.loading = true;
+    console.log("Loading...");
     const credStore = useCredentialsStore();
     const LogInState = credStore.isLoggedIn;
 
+    const appStore = useAppStore();
+    this.theme = appStore.theme;
+
     if (LogInState) {
       this.loading = false;
+      this.isLoggedIn = true;
+      console.log("Logged In");
     } else {
+      console.log("Not Logged In");
       this.$router.push({
         name: "LoginPage",
       });
