@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card max-width="300px">
     <v-img height="250" :src="image" cover></v-img>
     <v-card-item>
       <v-card-title>{{ title }}</v-card-title>
@@ -52,11 +52,17 @@ export default {
   }),
 
   methods: {
+    /**
+     * Emits the 'onConfirm' event when called.
+     */
     emitCofirmEvent() {
       this.$emit("onConfirm");
       console.log("emitCofirmEvent");
     },
 
+    /**
+     * Emits the 'onDeny' event when called.
+     */
     emitDenyEvent() {
       this.$emit("onDeny");
       console.log("emitDenyEvent");
