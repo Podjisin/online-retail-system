@@ -1,12 +1,38 @@
 <template>
-  <v-card>
-    <v-card-text>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita minima
-      excepturi quibusdam natus eveniet rerum at, velit, aspernatur soluta ipsa
-      saepe molestias, perspiciatis possimus facere iste nam eaque veritatis
-      magnam?
-    </v-card-text>
-  </v-card>
+  <div>
+    <v-container grid-list-xs>
+      <v-row>
+        <v-col>
+          <CustomCard
+            title="Title"
+            subtitle="subtitle"
+            text="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas
+              doloremque, odio atque repudiandae et tenetur placeat distinctio
+              vel ea nulla laudantium est dolores veniam dignissimos voluptatem
+              amet praesentium architecto deleniti."
+            @onConfirm="handleConfirmEvent"
+            @onDeny="handleConfirmEvent"
+          >
+          </CustomCard>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
-<script></script>
+<script>
+import CustomCard from "@/components/CustomCard.vue";
+export default {
+  data: () => ({}),
+
+  components: {
+    CustomCard,
+  },
+
+  methods: {
+    async handleConfirmEvent() {
+      console.log("Emit Catched");
+    },
+  },
+};
+</script>
 <style></style>

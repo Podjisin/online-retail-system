@@ -6,6 +6,7 @@
           <v-col>
             <HeaderBar></HeaderBar>
             <BreadCrumb> </BreadCrumb>
+
             <v-main>
               <router-view></router-view>
             </v-main>
@@ -31,8 +32,8 @@
 </template>
 <script>
 import SnackBar from "@/components/SnackBar.vue";
-import HeaderBar from "@/components/HeaderBar.vue";
-import NavBar from "@/components/NavBar.vue";
+import HeaderBar from "@/layouts/default/HeaderBar.vue";
+import NavBar from "@/layouts/default/NavBar.vue";
 import BreadCrumb from "@/components/BreadCrumb.vue";
 import { useAppStore, useCredentialsStore } from "@/store/app";
 import { mapStores } from "pinia";

@@ -8,6 +8,11 @@ import ProfilePage from "@/views/pages/ProfilePage.vue";
 
 import ErrorPage from "@/views/ErrorPage.vue";
 
+/**
+ * Defines the routes for the Vue router.
+ * Includes routes for login, home, dashboard, profile,
+ * 404 error handling, and etc.
+ */
 const routes = [
   {
     path: "/",

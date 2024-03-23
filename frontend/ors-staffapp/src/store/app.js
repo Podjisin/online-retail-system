@@ -1,6 +1,13 @@
 // Utilities
 import { defineStore } from "pinia";
 
+/**
+ * Defines a Pinia store named 'app' with state and actions for managing application state.
+ *
+ * State includes theme, header bar, and navigator bar config pulled from localStorage.
+ *
+ * Actions allow updating state and saving values to localStorage.
+ */
 export const useAppStore = defineStore("app", {
   state: () => ({
     theme: localStorage.getItem("theme") || "light",
@@ -70,6 +77,11 @@ export const useAppStore = defineStore("app", {
   }),
 
   actions: {
+    /**
+     * Sets the theme value and saves it to localStorage.
+     *
+     * @param {string} value - The theme value to set.
+     */
     toggleTheme(value) {
       this.theme = value;
       localStorage.setItem("theme", this.theme);
@@ -101,9 +113,13 @@ export const useAppStore = defineStore("app", {
       localStorage.setItem("navigatorBarSubtitle", subtitle);
     },
 
+    /**
+     * Sets the drawer state for the navigator bar.
+     *
+     * @param {boolean} boolean - The new drawer state.
+     */
     setNavigatorBarDrawer(boolean) {
       this.navigatorBar.drawer = boolean;
-      // localStorage.setItem("navigatorBarDrawer", boolean);
       localStorage.setItem("navigatorBarDrawer", JSON.stringify(boolean));
     },
 
@@ -112,6 +128,7 @@ export const useAppStore = defineStore("app", {
     },
   },
 });
+
 // Kinda sucks that pinia dont have persist option
 export const useCredentialsStore = defineStore("credentials", {
   state: () => ({
