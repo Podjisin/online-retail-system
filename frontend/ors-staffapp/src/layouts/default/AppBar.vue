@@ -1,17 +1,24 @@
 <template>
-  <v-card>
-    <v-toolbar color="primary" image="../../assets/banner2.jpg">
-      <v-app-bar-nav-icon @click="setDrawerVisibility()"></v-app-bar-nav-icon>
-      <v-toolbar-title>
-        {{ headerBar.title }}
-      </v-toolbar-title>
-      <v-btn
-        :icon="theme.switch ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-        @click="toggleTheme"
-      ></v-btn>
-      <v-btn icon="mdi-logout" @click="dialog.model = true"></v-btn>
-    </v-toolbar>
-  </v-card>
+  <div>
+    <v-app-bar color="primary" image="../../assets/banner2.jpg" prominent>
+      <!-- <template #image>
+        <v-img
+          gradient="to top right, rgba(19,84,122,.8), rgba(128,208,199,.8)"
+        ></v-img>
+      </template> -->
+      <template #prepend>
+        <v-app-bar-nav-icon @click="setDrawerVisibility()"></v-app-bar-nav-icon>
+      </template>
+      <template #append>
+        <v-btn
+          :icon="theme.switch ? 'mdi-weather-sunny' : 'mdi-weather-night'"
+          @click="toggleTheme"
+        ></v-btn>
+        <v-btn icon="mdi-logout" @click="dialog.model = true"></v-btn>
+      </template>
+    </v-app-bar>
+  </div>
+
   <div>
     <v-dialog
       v-model="dialog.model"
