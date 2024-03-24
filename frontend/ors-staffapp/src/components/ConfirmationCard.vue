@@ -1,6 +1,6 @@
 <template>
-  <v-card max-width="300px">
-    <v-img height="250" :src="image" cover></v-img>
+  <v-card elevation="5" theme="light">
+    <v-img :src="image" cover></v-img>
     <v-card-item>
       <v-card-title>{{ title }}</v-card-title>
 
@@ -10,16 +10,22 @@
     </v-card-item>
     <v-divider thickness="2"></v-divider>
 
-    <v-card-text>
+    <v-card-text v-if="text">
       {{ text }}
     </v-card-text>
 
     <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn color="error" icon="mdi-check" text @click="emitDenyEvent"></v-btn>
-      <v-btn
+      <v-divider color="primary" thickness="2"></v-divider>
+      <v-btn color="error" icon="mdi-close" text @click="emitDenyEvent"></v-btn>
+      <v-divider
         color="primary"
-        icon="mdi-close"
+        vertical
+        thickness="2"
+        class="px-1"
+      ></v-divider>
+      <v-btn
+        color="success"
+        icon="mdi-check"
         text
         @click="emitCofirmEvent"
       ></v-btn>
@@ -67,6 +73,10 @@ export default {
       this.$emit("onDeny");
       console.log("emitDenyEvent");
     },
+
+    /**
+     * Get image size and change it so it fits smaller screen
+     */
   },
 };
 </script>
