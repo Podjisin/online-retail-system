@@ -1,31 +1,88 @@
 <template>
-  <div>
-    <v-container grid-list-xs>
-      <v-row>
-        <v-col>
-          <CustomCard
-            title="Title"
-            subtitle="subtitle"
-            text="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas
-              doloremque, odio atque repudiandae et tenetur placeat distinctio
-              vel ea nulla laudantium est dolores veniam dignissimos voluptatem
-              amet praesentium architecto deleniti."
-            @onConfirm="handleConfirmEvent"
-            @onDeny="handleConfirmEvent"
-          >
-          </CustomCard>
-        </v-col>
-      </v-row>
-    </v-container>
-  </div>
+  <v-container grid-list-xs fluid>
+    <v-row justify="center">
+      <v-col>
+        <TitleCard title="Sample Title" color="primary"></TitleCard>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col
+        v-for="(item, index) in items"
+        :key="index"
+        xs="12"
+        sm="6"
+        md="4"
+        lg="3"
+      >
+        <ConfirmationCard
+          :title="item.title"
+          :subtitle="item.subtitle"
+          :text="item.text"
+          @onConfirm="handleConfirmEvent"
+          @onDeny="handleConfirmEvent"
+        >
+        </ConfirmationCard>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
-import CustomCard from "@/components/CustomCard.vue";
+import ConfirmationCard from "@/components/ConfirmationCard.vue";
+import TitleCard from "@/components/TitleCard.vue";
 export default {
-  data: () => ({}),
+  data: () => ({
+    items: [
+      {
+        title: "1 title",
+        subtitle: "1 subtitle",
+        text: "1 text",
+      },
+      {
+        title: "2 title",
+        subtitle: "2 subtitle",
+        text: "2 text",
+      },
+      {
+        title: "3 title",
+        subtitle: "3 subtitle",
+        text: "3 text",
+      },
+      {
+        title: "1 title",
+        subtitle: "1 subtitle",
+        text: "1 text",
+      },
+      {
+        title: "2 title",
+        subtitle: "2 subtitle",
+        text: "2 text",
+      },
+      {
+        title: "3 title",
+        subtitle: "3 subtitle",
+        text: "3 text",
+      },
+      {
+        title: "1 title",
+        subtitle: "1 subtitle",
+        text: "1 text",
+      },
+      {
+        title: "2 title",
+        subtitle: "2 subtitle",
+        text: "2 text",
+      },
+      {
+        title: "3 title",
+        subtitle: "3 subtitle",
+        text: "3 text",
+      },
+    ],
+  }),
 
   components: {
-    CustomCard,
+    ConfirmationCard,
+    TitleCard,
   },
 
   methods: {

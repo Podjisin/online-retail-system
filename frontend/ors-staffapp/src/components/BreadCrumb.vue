@@ -4,7 +4,7 @@
       {{ item.title }}
     </template>
   </v-breadcrumbs>
-  <v-divider thickness="2" class="py-2" color="secondary"> </v-divider>
+  <v-divider thickness="2" color="secondary"> </v-divider>
 </template>
 
 <script>
@@ -22,6 +22,11 @@ export default {
     },
   },
   methods: {
+    /**
+     * Updates the breadcrumb navigation based on the current route.
+     * Gets the matched routes that have a breadcrumb meta field, maps them to breadcrumb items,
+     * and updates the component's items data.
+     */
     updateBreadcrumbs() {
       // console.log("Current route:", this.$route);
       const matchedRoutes = this.$route.matched.filter(

@@ -1,13 +1,17 @@
 <template>
   <v-app v-if="this.isLoggedIn" :theme="this.theme">
     <div>
-      <v-container fluid>
+      <v-container>
         <v-row>
           <v-col>
-            <HeaderBar></HeaderBar>
+            <AppBar> </AppBar>
+            <br />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
             <BreadCrumb> </BreadCrumb>
-
-            <v-main>
+            <v-main class="pa-2">
               <router-view></router-view>
             </v-main>
           </v-col>
@@ -32,7 +36,7 @@
 </template>
 <script>
 import SnackBar from "@/components/SnackBar.vue";
-import HeaderBar from "@/layouts/default/HeaderBar.vue";
+import AppBar from "@/layouts/default/AppBar.vue";
 import NavBar from "@/layouts/default/NavBar.vue";
 import BreadCrumb from "@/components/BreadCrumb.vue";
 import { useAppStore, useCredentialsStore } from "@/store/app";
@@ -52,7 +56,7 @@ export default {
   }),
   components: {
     SnackBar,
-    HeaderBar,
+    AppBar,
     NavBar,
     BreadCrumb,
   },
