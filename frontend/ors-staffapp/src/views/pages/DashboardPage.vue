@@ -18,6 +18,7 @@
           :title="item.title"
           :subtitle="item.subtitle"
           :text="item.text"
+          image="https://cdn.vuetifyjs.com/images/cards/cooking.png"
           @onConfirm="handleConfirmEvent"
           @onDeny="handleConfirmEvent"
         >

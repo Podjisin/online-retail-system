@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="navBar.drawer" temporary>
+  <v-navigation-drawer v-model="navBar.drawer" permanent>
     <v-list>
       <v-list-item
         prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"

@@ -10,11 +10,24 @@
         <v-app-bar-nav-icon @click="setDrawerVisibility()"></v-app-bar-nav-icon>
       </template>
       <template #append>
-        <v-btn
-          :icon="theme.switch ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-          @click="toggleTheme"
-        ></v-btn>
-        <v-btn icon="mdi-logout" @click="dialog.model = true"></v-btn>
+        <v-tooltip text="Toggle Dark Mode" location="bottom">
+          <template #activator="{ props }">
+            <v-btn
+              v-bind="props"
+              :icon="theme.switch ? 'mdi-weather-sunny' : 'mdi-weather-night'"
+              @click="toggleTheme"
+            ></v-btn>
+          </template>
+        </v-tooltip>
+        <v-tooltip text="Logout" location="bottom">
+          <template #activator="{ props }">
+            <v-btn
+              v-bind="props"
+              icon="mdi-logout"
+              @click="dialog.model = true"
+            ></v-btn>
+          </template>
+        </v-tooltip>
       </template>
     </v-app-bar>
   </div>
