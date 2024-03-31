@@ -1,5 +1,6 @@
 // Utilities
 import { defineStore } from "pinia";
+import api from "@/services/api";
 
 /**
  * Defines a Pinia store named 'app' with state and actions for managing application state.
@@ -11,6 +12,10 @@ import { defineStore } from "pinia";
 export const useAppStore = defineStore("app", {
   state: () => ({
     theme: localStorage.getItem("theme") || "light",
+
+    settings: {
+      currency: localStorage.getItem("currency") || "Php",
+    },
 
     headerBar: {
       title: localStorage.getItem("headerBarTitle") || "Dashboard",
@@ -50,28 +55,17 @@ export const useAppStore = defineStore("app", {
               localStorage.setItem("headerBarTitle") || "Profile";
           },
         },
-        // {
-        //   title: "Settings",
-        //   icon: "mdi-cog",
-        //   to: {
-        //     name: "SettingsPage",
-        //   },
-        //   onClick: () => {
-        //     const appStore = useAppStore();
-        //     appStore.setHeaderBarTitle("Settings");
-        //   },
-        // },
-        // {
-        //   title: "About",
-        //   icon: "mdi-help",
-        //   to: {
-        //     name: "AboutPage",
-        //   },
-        //   onClick: () => {
-        //     const appStore = useAppStore();
-        //     appStore.setHeaderBarTitle("About");
-        //   },
-        // },
+        {
+          title: "Inventory",
+          icon: "mdi-view-grid",
+          to: {
+            name: "InventoryPage",
+          },
+          onClick: () => {
+            this.headerBar.title =
+              localStorage.setItem("headerBarTitle") || "Inventory";
+          },
+        },
       ],
     },
   }),
@@ -163,6 +157,54 @@ export const useCredentialsStore = defineStore("credentials", {
         localStorage.removeItem("isLoggedIn");
       } catch (error) {
         console.log(error);
+      }
+    },
+  },
+});
+
+export const useProductStore = defineStore("products", {
+  state: () => ({
+    inventory: [],
+    product: {},
+  }),
+
+  actions: {
+    async getAllInventory() {
+      try {
+        const response = await api.get("public/inventory/");
+        this.inventory = response.data;
+        console.log("API getProducts | Response: ", response.data);
+        return response;
+      } catch (error) {
+        console.log("API getProducts | ERROR: ", error);
+        return error.response;
+      }
+    },
+
+    async postItem(item) {
+      try {
+        const response = await api.post("public/inventory/", item);
+        console.log("API postItem | Response: ", response.data);
+        return response;
+      } catch (error) {
+        console.log("API postItem | ERROR: ", error);
+        return error.response;
+      }
+    },
+
+    async updateItem(item) {
+      try {
+        console.log("API updateItem | Item: ", item);
+
+        const response = await api.put(
+          `public/inventory/${item.product_id}`,
+          item
+        );
+        console.log("API updateItem | Response: ", response.data);
+        return response;
+      } catch (error) {
+        console.log("API updateItem | ERROR: ", error);
+        return error;
       }
     },
   },
