@@ -5,6 +5,7 @@ import LoginPage from "@/views/LoginPage.vue";
 import HomePage from "@/views/HomePage.vue";
 import DashboardPage from "@/views/pages/DashboardPage.vue";
 import ProfilePage from "@/views/pages/ProfilePage.vue";
+import InventoryPage from "@/views/pages/InventoryPage.vue";
 
 import ErrorPage from "@/views/ErrorPage.vue";
 
@@ -37,6 +38,12 @@ const routes = [
         name: "ProfilePage",
         component: ProfilePage,
         meta: { breadcrumb: "Profile", disabled: false },
+      },
+      {
+        path: "inventory",
+        name: "InventoryPage",
+        component: InventoryPage,
+        meta: { breadcrumb: "Inventory", disabled: false },
       },
     ],
   },
