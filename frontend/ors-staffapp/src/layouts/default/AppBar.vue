@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-app-bar color="primary" image="../../assets/banner2.jpg" prominent>
+    <!-- <v-app-bar color="primary" image="../../assets/banner2.jpg" prominent> -->
+    <v-app-bar color="primary" prominent>
       <!-- <template #image>
         <v-img
           gradient="to top right, rgba(19,84,122,.8), rgba(128,208,199,.8)"
@@ -10,7 +11,7 @@
         <v-app-bar-nav-icon @click="setDrawerVisibility()"></v-app-bar-nav-icon>
       </template>
       <template #append>
-        <v-tooltip text="Toggle Dark Mode" location="bottom">
+        <!-- <v-tooltip text="Toggle Dark Mode" location="bottom">
           <template #activator="{ props }">
             <v-btn
               v-bind="props"
@@ -18,7 +19,7 @@
               @click="toggleTheme"
             ></v-btn>
           </template>
-        </v-tooltip>
+        </v-tooltip> -->
         <v-tooltip text="Logout" location="bottom">
           <template #activator="{ props }">
             <v-btn
