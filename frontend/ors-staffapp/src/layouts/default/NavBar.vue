@@ -3,7 +3,7 @@
     <v-list>
       <v-list-item
         prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-        title="Jhon Doe"
+        :title="title"
       >
         <template v-slot:append>
           <v-btn
@@ -33,7 +33,7 @@
   </v-navigation-drawer>
 </template>
 <script>
-import { useAppStore } from "@/store/app";
+import { useAppStore, useCredentialsStore } from "@/store/app";
 import { mapStores } from "pinia";
 export default {
   data: () => ({
@@ -43,6 +43,8 @@ export default {
       drawer: false,
       items: [],
     },
+
+    title: "",
   }),
 
   computed: {
@@ -77,6 +79,7 @@ export default {
   },
 
   mounted() {
+    this.title = useCredentialsStore().username;
     this.navBar.items = useAppStore().navigatorBar.items;
   },
 };
