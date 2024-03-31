@@ -18,6 +18,7 @@
         text
         @click="emitCofirmEvent"
       ></v-btn>
+
       <v-tooltip text="More Details" location="top">
         <template #activator="{ props }">
           <v-btn
