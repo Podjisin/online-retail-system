@@ -1,14 +1,10 @@
 <template>
   <div class="text-center">
-    <v-snackbar v-model="value" vertical :timeout="timeout" :color="color">
-      <div class="text-subtitle-1 pb-2">{{ snackbarTitle }}</div>
-      <v-divider :thickness="5"></v-divider>
-      <p class="mt-2">
-        {{ snackbarText }}
-      </p>
+    <v-snackbar :model-value="model" :timeout="timeout" :color="color">
+      <div>{{ title }}</div>
 
       <template #actions>
-        <v-btn color="white" block text @click="value = false"> Close </v-btn>
+        <v-btn color="white" block text @click="value = false">Close</v-btn>
       </template>
     </v-snackbar>
   </div>
@@ -16,11 +12,11 @@
 <script>
 export default {
   props: {
-    snackbarTitle: {
-      type: String,
-      default: "",
+    model: {
+      type: Boolean,
+      default: false,
     },
-    snackbarText: {
+    title: {
       type: String,
       default: "",
     },
@@ -33,9 +29,5 @@ export default {
       default: 6000,
     },
   },
-
-  data: () => ({
-    value: false,
-  }),
 };
 </script>
