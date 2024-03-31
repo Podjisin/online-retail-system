@@ -1,12 +1,54 @@
 <template>
-  <v-card>
-    <v-card-text>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita minima
-      excepturi quibusdam natus eveniet rerum at, velit, aspernatur soluta ipsa
-      saepe molestias, perspiciatis possimus facere iste nam eaque veritatis
-      magnam?
-    </v-card-text>
+  <v-card elevation="2">
+    <v-form>
+      <v-container>
+        <v-row>
+          <v-col> <h2>Account</h2> </v-col>
+          <v-divider></v-divider>
+        </v-row>
+        <v-row>
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="profile.username"
+              label="Username"
+              prepend-icon="mdi-account"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="profile.password"
+              label="Password"
+              prepend-icon="mdi-key"
+              :type="profile.showPassword ? 'text' : 'password'"
+              :append-inner-icon="
+                profile.showPassword ? 'mdi-eye-off' : 'mdi-eye'
+              "
+              @click:append-inner="profile.showPassword = !profile.showPassword"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
   </v-card>
 </template>
-<script></script>
-<style></style>
+
+<script>
+import { useCredentialsStore } from "@/store/app";
+
+export default {
+  data: () => ({
+    profile: {
+      showPassword: false,
+
+      username: "",
+      password: "",
+    },
+  }),
+
+  created() {
+    const credStore = useCredentialsStore();
+    this.profile.username = credStore.username;
+    this.profile.password = credStore.password;
+  },
+};
+</script>

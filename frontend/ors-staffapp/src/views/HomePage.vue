@@ -1,5 +1,5 @@
 <template>
-  <v-app v-if="this.isLoggedIn" :theme="this.theme">
+  <v-app v-if="this.isLoggedIn" theme="blueViolet" class="bg-surface-variant">
     <div>
       <v-container>
         <v-row>

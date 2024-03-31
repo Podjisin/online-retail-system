@@ -11,6 +11,7 @@
   "dependencies": {
     "@date-io/dayjs": "^3.0.0",
     "@mdi/font": "^7.0.96",
+    "axios": "^1.6.8",
     "chart.js": "^3.9.1",
     "core-js": "^3.29.0",
     "dayjs": "^1.11.10",

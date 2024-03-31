@@ -1,10 +1,14 @@
 <template>
-  <v-container fluid fill-height>
-    <v-row justify="center" align="center">
+  <v-container>
+    <v-row justify="center">
       <v-col cols="12" sm="8" md="6">
-        <v-card class="error-card">
+        <v-card>
           <v-card-title class="text-center">Oops! Page Not Found</v-card-title>
+          <v-divider></v-divider>
           <v-card-text class="text-center">
+            <v-icon color="error" size="100">mdi-alert-circle-outline</v-icon>
+            <h1>404</h1>
+            <br />
             <p>
               The page you are looking for might have been removed, had its name
               changed, or is temporarily unavailable.
@@ -28,10 +32,3 @@ export default {
   name: "ErrorPage404",
 };
 </script>
-
-<style scoped>
-.error-card {
-  background-color: #f44336; /* Red color for error */
-  color: white; /* White text for contrast */
-}
-</style>

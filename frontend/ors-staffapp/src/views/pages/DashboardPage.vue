@@ -1,96 +1,79 @@
 <template>
-  <v-container grid-list-xs fluid>
-    <v-row justify="center">
+  <v-container>
+    <v-row>
+      <v-col> I dont know what to put here at the moment ¯\_(ツ)_/¯</v-col>
+    </v-row>
+    <v-row>
       <v-col>
-        <TitleCard title="Sample Title" color="primary"></TitleCard>
+        <v-card min-height="200px" elevation="3" class="bg-pink-lighten-1">
+          <v-card-title> Total Accounts </v-card-title>
+          <v-card-subtitle>this month</v-card-subtitle>
+        </v-card>
+      </v-col>
+      <v-col>
+        <v-card min-height="200px" elevation="3" class="bg-red-lighten-1">
+          <v-card-title> Current Orders </v-card-title>
+          <v-card-subtitle>this month</v-card-subtitle>
+        </v-card>
+      </v-col>
+      <v-col>
+        <v-card min-height="200px" elevation="3" class="bg-blue-lighten-1">
+          <v-card-title> Current Profit </v-card-title>
+          <v-card-subtitle>this month</v-card-subtitle>
+        </v-card>
       </v-col>
     </v-row>
     <v-row>
-      <v-col
-        v-for="(item, index) in items"
-        :key="index"
-        xs="12"
-        sm="6"
-        md="4"
-        lg="3"
-      >
-        <ConfirmationCard
-          :title="item.title"
-          :subtitle="item.subtitle"
-          :text="item.text"
-          image="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-          @onConfirm="handleConfirmEvent"
-          @onDeny="handleConfirmEvent"
-        >
-        </ConfirmationCard>
+      <v-col>
+        <h2>Inventory Stats</h2>
+        <v-divider></v-divider>
       </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-card min-height="200px" elevation="3" class="bg-red-lighten-1">
+          <v-card-title> Needed Restock </v-card-title>
+
+          <v-list lines="one">
+            <v-list-item title="Item 1"></v-list-item>
+            <v-divider></v-divider>
+            <v-list-item title="Item 2"></v-list-item>
+            <v-divider></v-divider>
+            <v-list-item title="Item 3"></v-list-item>
+          </v-list>
+        </v-card>
+      </v-col>
+      <v-col>
+        <v-card min-height="200px" elevation="3" class="bg-teal-lighten-1">
+          <v-card-title> Stable Stock </v-card-title>
+
+          <v-list lines="one">
+            <v-list-item title="Item 4"></v-list-item>
+            <v-divider></v-divider>
+            <v-list-item title="Item 5"></v-list-item>
+            <v-divider></v-divider>
+            <v-list-item title="Item 6"></v-list-item>
+          </v-list>
+        </v-card>
+      </v-col>
+      <!-- <v-col>
+        <v-card min-height="200px" elevation="3" class="bg-blue-lighten-1">
+          <v-card-title> Current Profit </v-card-title>
+          <v-card-subtitle>this month</v-card-subtitle>
+        </v-card>
+      </v-col> -->
     </v-row>
   </v-container>
 </template>
 <script>
-import ConfirmationCard from "@/components/ConfirmationCard.vue";
-import TitleCard from "@/components/TitleCard.vue";
 export default {
   data: () => ({
-    items: [
-      {
-        title: "1 title",
-        subtitle: "1 subtitle",
-        text: "1 text",
-      },
-      {
-        title: "2 title",
-        subtitle: "2 subtitle",
-        text: "2 text",
-      },
-      {
-        title: "3 title",
-        subtitle: "3 subtitle",
-        text: "3 text",
-      },
-      {
-        title: "1 title",
-        subtitle: "1 subtitle",
-        text: "1 text",
-      },
-      {
-        title: "2 title",
-        subtitle: "2 subtitle",
-        text: "2 text",
-      },
-      {
-        title: "3 title",
-        subtitle: "3 subtitle",
-        text: "3 text",
-      },
-      {
-        title: "1 title",
-        subtitle: "1 subtitle",
-        text: "1 text",
-      },
-      {
-        title: "2 title",
-        subtitle: "2 subtitle",
-        text: "2 text",
-      },
-      {
-        title: "3 title",
-        subtitle: "3 subtitle",
-        text: "3 text",
-      },
-    ],
+    items: [],
   }),
 
-  components: {
-    ConfirmationCard,
-    TitleCard,
-  },
+  components: {},
 
-  methods: {
-    async handleConfirmEvent() {
-      console.log("Emit Catched");
-    },
-  },
+  methods: {},
 };
 </script>
 <style></style>
