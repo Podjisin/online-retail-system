@@ -1,7 +1,7 @@
 <template>
-  <v-app v-if="this.isLoggedIn" theme="blueViolet" class="bg-surface-variant">
+  <v-app v-if="this.isLoggedIn" theme="blueViolet" class="surface-light">
     <div>
-      <v-container>
+      <v-container fluid>
         <v-row>
           <v-col>
             <AppBar> </AppBar>
@@ -14,6 +14,11 @@
             <v-main class="pa-2">
               <router-view></router-view>
             </v-main>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <FooterBar></FooterBar>
           </v-col>
         </v-row>
       </v-container>
@@ -38,6 +43,7 @@
 import SnackBar from "@/components/SnackBar.vue";
 import AppBar from "@/layouts/default/AppBar.vue";
 import NavBar from "@/layouts/default/NavBar.vue";
+import FooterBar from "@/layouts/default/FooterBar.vue";
 import BreadCrumb from "@/components/BreadCrumb.vue";
 import { useAppStore, useCredentialsStore } from "@/store/app";
 import { mapStores } from "pinia";
@@ -58,6 +64,7 @@ export default {
     SnackBar,
     AppBar,
     NavBar,
+    FooterBar,
     BreadCrumb,
   },
 
