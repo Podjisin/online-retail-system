@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card min-width="200px" elevation="5" color="surface-brigh">
+    <v-card min-width="200px" elevation="5" class="bg-surface-bright">
       <v-img
         :src="item.image"
         max-height="200px"
@@ -12,9 +12,16 @@
         <v-card-subtitle> {{ item.product_id }} </v-card-subtitle>
       </v-card-item>
       <v-card-text>
-        {{ currency }} {{ item.price }} | {{ item.stock_quantity }} in
-        stock</v-card-text
-      >
+        {{ currency }} {{ item.price }} | {{ item.stock_quantity }} in stock
+        <br />
+        <v-chip
+          prepend-icon="mdi-alert"
+          v-if="item.stock_quantity < item.stock_threshold"
+          color="error"
+        >
+          Threshold Reached!</v-chip
+        >
+      </v-card-text>
       <v-divider></v-divider>
       <v-card-actions class="justify-center pa-1">
         <v-tooltip text="More Details" location="top">
@@ -54,6 +61,11 @@
         <v-card-text>
           <v-form v-model="form.model">
             <v-container class="py-1">
+              <v-row v-if="item.updated">
+                <v-col>
+                  <p>last updated: {{ item.updated }}</p>
+                </v-col>
+              </v-row>
               <v-row dense>
                 <v-col>
                   <v-text-field
@@ -96,6 +108,15 @@
                     v-model="localItem.stock_quantity"
                     :rules="[rules.required, rules.number]"
                     label="Stock Quantity"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row dense>
+                <v-col>
+                  <v-text-field
+                    v-model="localItem.stock_threshold"
+                    :rules="[rules.required, rules.number]"
+                    label="Stock Threshold"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -195,9 +216,12 @@ export default {
         product_name: "",
         image: null,
         description: "",
-        price: "",
-        stock_quantity: "",
+        price: 0,
+        stock_quantity: 0,
+        stock_threshold: 0,
         category_id: "",
+        created: null,
+        updated: null,
       }),
     },
   },
@@ -312,6 +336,7 @@ export default {
         description: this.localItem.description,
         price: this.localItem.price,
         stock_quantity: this.localItem.stock_quantity,
+        stock_threshold: this.localItem.stock_threshold,
         category_id: this.localItem.category_id,
       };
 

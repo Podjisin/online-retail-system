@@ -173,10 +173,10 @@ export const useProductStore = defineStore("products", {
       try {
         const response = await api.get("public/inventory/");
         this.inventory = response.data;
-        console.log("API getProducts | Response: ", response.data);
-        return response;
+        console.log("STORE getProducts | Response: ", response.data);
+        return true;
       } catch (error) {
-        console.log("API getProducts | ERROR: ", error);
+        console.log("STORE getProducts | ERROR: ", error);
         return error.response;
       }
     },
@@ -184,26 +184,37 @@ export const useProductStore = defineStore("products", {
     async postItem(item) {
       try {
         const response = await api.post("public/inventory/", item);
-        console.log("API postItem | Response: ", response.data);
-        return response;
+        console.log("STORE postItem | Response: ", response.data);
+        return true;
       } catch (error) {
-        console.log("API postItem | ERROR: ", error);
+        console.log("STORE postItem | ERROR: ", error);
         return error.response;
       }
     },
 
     async updateItem(item) {
       try {
-        console.log("API updateItem | Item: ", item);
+        console.log("STORE updateItem | Item: ", item);
+
+        const data = {
+          product_id: item.product_id,
+          product_name: item.product_name,
+          image: item.image,
+          description: item.description,
+          price: parseFloat(item.price),
+          stock_quantity: parseInt(item.stock_quantity),
+          stock_threshold: parseInt(item.stock_threshold),
+          category_id: item.category_id,
+        };
 
         const response = await api.put(
           `public/inventory/${item.product_id}`,
-          item
+          data
         );
-        console.log("API updateItem | Response: ", response.data);
-        return response;
+        console.log("STORE updateItem | Response: ", response.data);
+        return true;
       } catch (error) {
-        console.log("API updateItem | ERROR: ", error);
+        console.log("STORE updateItem | ERROR: ", error);
         return error;
       }
     },

@@ -34,13 +34,22 @@ router.post("/", async (req, res) => {
       req.body.product_name || "item-" + Date.now().toString();
 
     const image = req.body.image;
+
+    const saveImage = async (image) => {
+      const imageName = uuidv4() + path.extname(product_id);
+      const imagePath = path.join(assetsStore, imageName);
+      fs.writeFile(imagePath, image.buffer);
+      return imageName;
+    };
+
     const description = req.body.description || "No description provided";
     const price = req.body.price || 0;
     const stock_quantity = req.body.stock_quantity || 0;
+    const stock_threshold = req.body.stock_threshold || 0;
     const category_id = req.body.category || "No category provided";
 
     const sql =
-      "INSERT INTO products (product_id, product_name, image, description, price, stock_quantity, category_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO products (product_id, product_name, image, description, price, stock_quantity, stock_threshold, category_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     try {
       db.query(sql, [
         product_id,
@@ -49,6 +58,7 @@ router.post("/", async (req, res) => {
         description,
         price,
         stock_quantity,
+        stock_threshold,
         category_id,
       ]);
     } catch (err) {
@@ -63,6 +73,7 @@ router.post("/", async (req, res) => {
       description,
       price,
       stock_quantity,
+      stock_threshold,
       category_id,
     });
   } catch (err) {
@@ -111,6 +122,7 @@ router.get("/:id", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
+  console.log("Updating Item: ", req.body);
   try {
     const id = req.params.id;
     const product_name = req.body.product_name;
@@ -118,10 +130,12 @@ router.put("/:id", async (req, res) => {
     const description = req.body.description;
     const price = req.body.price;
     const stock_quantity = req.body.stock_quantity;
+    const stock_threshold = req.body.stock_threshold;
     const category_id = req.body.category_id;
+    const updatedTimestamp = Date.now();
 
     const sql =
-      "UPDATE products SET product_name =?, image =?, description =?, price =?, stock_quantity =?, category_id =? WHERE product_id =?";
+      "UPDATE products SET product_name =?, image =?, description =?, price =?, stock_quantity =?, stock_threshold =?, category_id =?, updated =? WHERE product_id =?";
 
     db.query(
       sql,
@@ -131,7 +145,9 @@ router.put("/:id", async (req, res) => {
         description,
         price,
         stock_quantity,
+        stock_threshold,
         category_id,
+        updatedTimestamp,
         id,
       ],
       (err, result) => {

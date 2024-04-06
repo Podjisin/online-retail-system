@@ -58,6 +58,16 @@
             <v-row dense>
               <v-col>
                 <v-text-field
+                  v-model="localItem.stock_threshold"
+                  :rules="[rules.required, rules.number]"
+                  label="Stock Threshold"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+
+            <v-row dense>
+              <v-col>
+                <v-text-field
                   v-model="localItem.category_id"
                   :rules="[rules.required]"
                   label="Catergory Id"
@@ -145,7 +155,8 @@ export default {
         image: null,
         description: "",
         price: "",
-        stock_quantity: "",
+        stock_quantity: 0,
+        stock_threshold: 0,
         category_id: "",
       }),
     },
@@ -251,6 +262,7 @@ export default {
         description: this.localItem.description,
         price: this.localItem.price,
         stock_quantity: this.localItem.stock_quantity,
+        stock_threshold: this.localItem.stock_threshold,
         category_id: this.localItem.category_id,
       };
 
@@ -271,6 +283,7 @@ export default {
         description: "",
         price: "",
         stock_quantity: "",
+        stock_threshold: "",
         category_id: "",
       };
 
