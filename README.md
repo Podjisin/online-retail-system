@@ -66,3 +66,13 @@ You just need to run `startFrontend.bat` and it will run the frontend applicatio
 Default username and password is `admin`. For development purposes, it is hardcoded cuz its currently not the priority and its a pain to keep changing cuz as I said, I keep changing the database... means I constantly wipe and rewrite it lol.
 
 However, you can change the default credentials in `ors-staffapp/src/store/app.js` under `useCredentialsStore`.
+
+# TODO
+
+- [ ] Add a script for creating the database
+
+- [ ] Add a proper logging system for backend (maybe winston or I could Just make my own.. i can't be that hard... right?)
+
+- [ ] Add a proper error handling system
+
+- [ ] Honestly, I'm not sure what else to add...
