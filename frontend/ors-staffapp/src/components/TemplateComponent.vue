@@ -1,4 +1,10 @@
 <template>
   <div></div>
 </template>
-<script></script>
+<script>
+export default {
+  data: () => ({
+    model: false,
+  }),
+};
+</script>

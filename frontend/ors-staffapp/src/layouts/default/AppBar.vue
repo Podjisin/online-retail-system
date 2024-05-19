@@ -7,19 +7,21 @@
           gradient="to top right, rgba(19,84,122,.8), rgba(128,208,199,.8)"
         ></v-img>
       </template> -->
+      <template v-if="showTitle" #title> Staff Admin Application </template>
+
       <template #prepend>
         <v-app-bar-nav-icon @click="setDrawerVisibility()"></v-app-bar-nav-icon>
       </template>
       <template #append>
-        <!-- <v-tooltip text="Toggle Dark Mode" location="bottom">
+        <v-tooltip text="Notifications" location="bottom">
           <template #activator="{ props }">
-            <v-btn
-              v-bind="props"
-              :icon="theme.switch ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-              @click="toggleTheme"
-            ></v-btn>
+            <v-btn v-bind="props" icon>
+              <v-badge color="warning" :content="9">
+                <v-icon icon="mdi-bell" size="x-large"></v-icon>
+              </v-badge>
+            </v-btn>
           </template>
-        </v-tooltip> -->
+        </v-tooltip>
         <v-tooltip text="Logout" location="bottom">
           <template #activator="{ props }">
             <v-btn
@@ -95,6 +97,8 @@ export default {
   data: () => ({
     loading: true,
 
+    showTitle: true,
+
     headerBar: {
       loading: true,
       title: null,
@@ -133,7 +137,7 @@ export default {
       const appStore = useAppStore();
       const oldVal = JSON.parse(appStore.navigatorBar.drawer);
       const newVal = !oldVal;
-      console.log("Header Bar | setDrawerVisibility | Old Value: ", oldVal);
+      // console.log("Header Bar | setDrawerVisibility | Old Value: ", oldVal);
       appStore.setNavigatorBarDrawer(newVal);
     },
 
@@ -149,11 +153,11 @@ export default {
       const currentTheme = appStore.theme;
 
       if (currentTheme === "light") {
-        appStore.toggleTheme("dark");
+        appStore.updateTheme("dark");
 
         this.theme.switch = false;
       } else {
-        appStore.toggleTheme("light");
+        appStore.updateTheme("light");
         this.theme.switch = true;
       }
     },
@@ -180,6 +184,17 @@ export default {
         });
       }, 2000);
     },
+  },
+  created() {
+    // console.log(this.$vuetify.display.name);
+    let display = this.$vuetify.display.name;
+    const allowedDisplay = ["md", "lg", "xl"];
+
+    if (allowedDisplay.includes(display)) {
+      this.showTitle = true;
+    } else {
+      this.showTitle = false;
+    }
   },
 };
 </script>

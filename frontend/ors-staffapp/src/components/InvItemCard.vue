@@ -1,12 +1,7 @@
 <template>
   <div>
     <v-card min-width="200px" elevation="5" class="bg-surface-bright">
-      <v-img
-        :src="item.image"
-        max-height="200px"
-        max-width="400px"
-        cover
-      ></v-img>
+      <v-img :src="item.image" max-height="200px" cover></v-img>
       <v-card-item>
         <v-card-title>{{ item.product_name }}</v-card-title>
         <v-card-subtitle> {{ item.product_id }} </v-card-subtitle>
@@ -14,25 +9,38 @@
       <v-card-text>
         {{ currency }} {{ item.price }} | {{ item.stock_quantity }} in stock
         <br />
-        <v-chip
+        <!-- <v-chip
           prepend-icon="mdi-alert"
           v-if="item.stock_quantity < item.stock_threshold"
-          color="error"
+          color="warning"
         >
           Threshold Reached!</v-chip
+        > -->
+
+        <v-chip
+          :prepend-icon="
+            item.stock_quantity < item.stock_threshold
+              ? `mdi-alert`
+              : `mdi-check`
+          "
+          :color="
+            item.stock_quantity < item.stock_threshold ? `warning` : `success`
+          "
         >
+          {{
+            item.stock_quantity < item.stock_threshold
+              ? `Threshold Reached`
+              : `Normal`
+          }}
+        </v-chip>
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions class="justify-center pa-1">
         <v-tooltip text="More Details" location="top">
           <template #activator="{ props }">
-            <v-btn
-              v-bind="props"
-              color="info"
-              icon="mdi-information-outline"
-              text
-              @click="dialog.model = !dialog.model"
-            ></v-btn>
+            <v-btn v-bind="props" color="info" @click="openDialog()" block text>
+              <v-icon size="30">mdi-information-outline</v-icon>
+            </v-btn>
           </template>
         </v-tooltip>
       </v-card-actions>
@@ -61,11 +69,17 @@
         <v-card-text>
           <v-form v-model="form.model">
             <v-container class="py-1">
-              <v-row v-if="item.updated">
+              <v-row v-if="item.created" no-gutters>
                 <v-col>
-                  <p>last updated: {{ item.updated }}</p>
+                  <p>Created: {{ formatTimestamp(item.created) }}</p>
                 </v-col>
               </v-row>
+              <v-row v-if="item.updated" no-gutters>
+                <v-col>
+                  <p>Last updated: {{ formatTimestamp(item.updated) }}</p>
+                </v-col>
+              </v-row>
+              <br />
               <v-row dense>
                 <v-col>
                   <v-text-field
@@ -99,6 +113,7 @@
                     v-model="localItem.price"
                     :rules="[rules.required, rules.number]"
                     label="Product Price"
+                    type="number"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -108,6 +123,7 @@
                     v-model="localItem.stock_quantity"
                     :rules="[rules.required, rules.number]"
                     label="Stock Quantity"
+                    type="number"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -117,6 +133,7 @@
                     v-model="localItem.stock_threshold"
                     :rules="[rules.required, rules.number]"
                     label="Stock Threshold"
+                    type="number"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -154,7 +171,6 @@
         <v-divider></v-divider>
         <v-card-actions class="justify-center">
           <v-btn
-            :disabled="!form.model"
             prepend-icon="mdi-content-save"
             color="success"
             @click="confirmation.model = !confirmation.model"
@@ -162,7 +178,6 @@
             Save
           </v-btn>
         </v-card-actions>
-        <template #subtitle></template>
       </v-card>
     </v-dialog>
   </div>
@@ -199,11 +214,10 @@
   </div>
 </template>
 <script>
-// import Vibrant from "node-vibrant";
-
 import SnackBar from "./SnackBar.vue";
+import { formatTimestamp } from "@/utils/helpers";
 export default {
-  emits: ["onUpdate"],
+  emits: ["onUpdate", "onHold"],
   props: {
     currency: {
       type: String,
@@ -294,13 +308,18 @@ export default {
   watch: {
     localItem: {
       handler() {
-        console.log("localItem changed");
+        // console.log("localItem changed");
+        this.itemChanged = true;
+        // console.log(this.itemChanged);
       },
       deep: true,
     },
   },
 
   methods: {
+    formatTimestamp(timestamp) {
+      return formatTimestamp(timestamp);
+    },
     /**
      * Handles uploading an image file and updating the localItem.image with the preview data URL.
      * - Reads the uploaded file into a data URL
@@ -322,6 +341,12 @@ export default {
       console.log(dataURL);
       this.imagePreview = dataURL;
       this.localItem.image = dataURL;
+    },
+
+    openDialog() {
+      this.dialog.model = !this.dialog.model;
+
+      this.$emit("onHold");
     },
 
     /**

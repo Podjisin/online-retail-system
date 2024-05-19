@@ -12,46 +12,51 @@ import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import { aliases, mdi } from "vuetify/iconsets/mdi";
 import DayJsAdapter from "@date-io/dayjs";
+import { VSonner, toast } from "vuetify-sonner";
+import "vuetify-sonner/style.css";
 
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 
-const myCustomLightTheme = {
-  dark: false,
-  colors: {
-    background: "#FFFFFF",
-    surface: "#FFFFFF",
-    "surface-bright": "#FFFFFF",
-    "surface-light": "#EEEEEE",
-    "surface-variant": "#424242",
-    "on-surface-variant": "#EEEEEE",
-    primary: "#1867C0",
-    "primary-darken-1": "#1F5592",
-    secondary: "#48A9A6",
-    "secondary-darken-1": "#018786",
-    error: "#B00020",
-    info: "#2196F3",
-    success: "#4CAF50",
-    warning: "#FB8C00",
-  },
-  variables: {
-    "border-color": "#000000",
-    "border-opacity": 0.12,
-    "high-emphasis-opacity": 0.87,
-    "medium-emphasis-opacity": 0.6,
-    "disabled-opacity": 0.38,
-    "idle-opacity": 0.04,
-    "hover-opacity": 0.04,
-    "focus-opacity": 0.12,
-    "selected-opacity": 0.08,
-    "activated-opacity": 0.12,
-    "pressed-opacity": 0.12,
-    "dragged-opacity": 0.08,
-    "theme-kbd": "#212529",
-    "theme-on-kbd": "#FFFFFF",
-    "theme-code": "#F5F5F5",
-    "theme-on-code": "#000000",
-  },
-};
+// import { VSparkline } from "vuetify/lib/components/VSparkline";
+// console.log(VSparkline);
+
+// const myCustomLightTheme = {
+//   dark: false,
+//   colors: {
+//     background: "#FFFFFF",
+//     surface: "#FFFFFF",
+//     "surface-bright": "#FFFFFF",
+//     "surface-light": "#EEEEEE",
+//     "surface-variant": "#424242",
+//     "on-surface-variant": "#EEEEEE",
+//     primary: "#1867C0",
+//     "primary-darken-1": "#1F5592",
+//     secondary: "#48A9A6",
+//     "secondary-darken-1": "#018786",
+//     error: "#B00020",
+//     info: "#2196F3",
+//     success: "#4CAF50",
+//     warning: "#FB8C00",
+//   },
+//   variables: {
+//     "border-color": "#000000",
+//     "border-opacity": 0.12,
+//     "high-emphasis-opacity": 0.87,
+//     "medium-emphasis-opacity": 0.6,
+//     "disabled-opacity": 0.38,
+//     "idle-opacity": 0.04,
+//     "hover-opacity": 0.04,
+//     "focus-opacity": 0.12,
+//     "selected-opacity": 0.08,
+//     "activated-opacity": 0.12,
+//     "pressed-opacity": 0.12,
+//     "dragged-opacity": 0.08,
+//     "theme-kbd": "#212529",
+//     "theme-on-kbd": "#FFFFFF",
+//     "theme-code": "#F5F5F5",
+//     "theme-on-code": "#000000",
+//   },
+// };
 
 const myCustomChocolateTheme = {
   dark: false,
@@ -104,10 +109,10 @@ const myCustomBananaYellowTheme = {
     "primary-darken-1": "#2630D0", // Palatinate Blue
     secondary: "#2630D0", // Palatinate Blue
     "secondary-darken-1": "#3E63DB", // Royal Blue
-    error: "#FF0000", // Red (Not provided, using default)
-    info: "#0000FF", // Blue (Not provided, using default)
-    success: "#008000", // Green (Not provided, using default)
-    warning: "#FFA500", // Orange (Not provided, using default)
+    error: "#FF0000", // Red
+    info: "#0000FF", // Blue
+    success: "#008000", // Green
+    warning: "#FFA500", // Orange
   },
   variables: {
     "border-color": "#000000",
@@ -180,10 +185,10 @@ const myCustomBlueVioletTheme = {
     "primary-darken-1": "#483D8B", // Dark Slate Blue
     secondary: "#8A2BE2", // Blue Violet
     "secondary-darken-1": "#9370DB", // Medium Purple
-    error: "#FF0000", // Red (Not provided, using default)
-    info: "#0000FF", // Blue (Not provided, using default)
-    success: "#008000", // Green (Not provided, using default)
-    warning: "#FFA500", // Orange (Not provided, using default)
+    error: "#FF0000", // Red
+    info: "#0000FF", // Blue
+    success: "#008000", // Green
+    warning: "#FFA500", // Orange
   },
   variables: {
     "border-color": "#000000",
@@ -208,7 +213,7 @@ const myCustomBlueVioletTheme = {
 const myCustomHelloKittyPinkTheme = {
   dark: false,
   colors: {
-    background: "#FFFFFF", // White
+    background: "#FFE4E1", // White
     surface: "#FF69B4", // Hello Kitty Pink
     "surface-bright": "#FFC0CB", // Pink
     "surface-light": "#FFE4E1", // Misty Rose
@@ -218,10 +223,10 @@ const myCustomHelloKittyPinkTheme = {
     "primary-darken-1": "#333333", // Darker Black
     secondary: "#FF69B4", // Hello Kitty Pink
     "secondary-darken-1": "#C71585", // Medium Violet Red
-    error: "#FF0000", // Red (Not provided, using default)
-    info: "#0000FF", // Blue (Not provided, using default)
-    success: "#008000", // Green (Not provided, using default)
-    warning: "#FFA500", // Orange (Not provided, using default)
+    error: "#FF0000", // Red
+    info: "#0000FF", // Blue
+    success: "#008000", // Green
+    warning: "#FFA500", // Orange
   },
   variables: {
     "border-color": "#000000",
@@ -246,8 +251,8 @@ const myCustomHelloKittyPinkTheme = {
 const BluePinkTheme = {
   dark: false,
   colors: {
-    background: "#FFFFFF", // White
-    surface: "#502688", // KSU Purple
+    background: "#FFFFFF",
+    surface: "#502688",
     "surface-bright": "#8F61DB", // Medium Purple
     "surface-light": "#FC90AF", // Baker-Miller Pink
     "surface-variant": "#EDBBCE", // Cameo Pink
@@ -256,10 +261,10 @@ const BluePinkTheme = {
     "primary-darken-1": "#EFDCCE", // Almond
     secondary: "#2E36AA", // Pigment Blue
     "secondary-darken-1": "#2E36AA", // Pigment Blue
-    error: "#FF0000", // Red (Not provided, using default)
-    info: "#0000FF", // Blue (Not provided, using default)
-    success: "#008000", // Green (Not provided, using default)
-    warning: "#FFA500", // Orange (Not provided, using default)
+    error: "#FF0000", // Red
+    info: "#0000FF", // Blue
+    success: "#008000", // Green
+    warning: "#FFA500", // Orange
   },
   variables: {
     "border-color": "#000000",
@@ -294,10 +299,10 @@ const KSUPurpleTheme = {
     "primary-darken-1": "#2E36AA", // Pigment Blue
     secondary: "#FC90AF", // Baker-Miller Pink
     "secondary-darken-1": "#EDBBCE", // Cameo Pink
-    error: "#FFCCCC", // Lighter Red
-    info: "#CCCCFF", // Lighter Blue
-    success: "#B3FFCC", // Lighter Green
-    warning: "#FFE5B3", // Lighter Orange
+    error: "#B00020",
+    info: "#2196F3",
+    success: "#4CAF50",
+    warning: "#FB8C00",
   },
   variables: {
     "border-color": "#000000",
@@ -323,6 +328,59 @@ export default createVuetify({
   date: {
     adapter: DayJsAdapter,
   },
+
+  components: {
+    VSonner,
+    toast,
+  },
+  display: {
+    mobileBreakpoint: "sm",
+    thresholds: {
+      xs: 0,
+      sm: 340,
+      md: 540,
+      lg: 800,
+      xl: 1280,
+    },
+  },
+
+  defaults: {
+    VCard: {},
+    VDataTable: {
+      density: "compact",
+      hover: true,
+      class: "rounded elevation-1",
+      // headerProps: {
+      //   bgcolor: "primary",
+      // },
+    },
+    VTextField: {
+      variant: "outlined",
+      density: "compact",
+    },
+    VAutocomplete: {
+      variant: "outlined",
+      density: "compact",
+    },
+    VTextarea: {
+      variant: "outlined",
+      density: "compact",
+    },
+    VCombobox: {
+      variant: "outlined",
+      density: "compact",
+    },
+    VRow: {
+      dense: true,
+    },
+    VBtn: {
+      dense: true,
+    },
+    VDialog: {
+      scrollable: true,
+      Transition: "dialog-transition",
+    },
+  },
   icons: {
     defaultSet: "mdi",
     aliases,
@@ -333,16 +391,20 @@ export default createVuetify({
   theme: {
     variations: {
       colors: [
+        "background",
         "primary",
+        "primary-darken-1",
         "secondary",
+        "secondary-darken-1",
         "surface-bright",
         "surface-light",
         "surface-variant",
         "on-surface-variant",
       ],
     },
+    defaultTheme: "light",
     themes: {
-      light: myCustomLightTheme,
+      // light: myCustomLightTheme,
       chocolate: myCustomChocolateTheme,
       bananaYellow: myCustomBananaYellowTheme,
       solarized: myCustomSolarizedTheme,

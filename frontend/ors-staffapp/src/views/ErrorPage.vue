@@ -6,7 +6,7 @@
           <v-card-title class="text-center">Oops! Page Not Found</v-card-title>
           <v-divider></v-divider>
           <v-card-text class="text-center">
-            <v-icon color="error" size="100">mdi-alert-circle-outline</v-icon>
+            <v-icon color="error" size="200">mdi-alert-circle-outline</v-icon>
             <h1>404</h1>
             <br />
             <p>
@@ -18,8 +18,9 @@
               the homepage.
             </p>
           </v-card-text>
-          <v-card-actions class="text-center">
-            <v-btn color="primary" to="/">Go to Homepage</v-btn>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-btn color="primary" @click="goBack()" block>Go Back</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -30,5 +31,10 @@
 <script>
 export default {
   name: "ErrorPage404",
+  methods: {
+    goBack() {
+      this.$router.back();
+    },
+  },
 };
 </script>

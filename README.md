@@ -1,6 +1,6 @@
 # Online-retail-system
 
-an ORS or Online Ordering system I'm making for a school project with my classmates
+an ORS or Online Ordering system I'm making for a school project
 
 # Pre-requisites
 

@@ -1,9 +1,10 @@
 import axios from "axios";
+import { toast } from "vuetify-sonner";
 
 const apiKey = "mockapikey6";
 const baseUrl = "http://localhost:8000";
 
-console.log("apiKey:", apiKey);
+// console.log("apiKey:", apiKey);
 
 const headers = {
   "x-api-key": apiKey,

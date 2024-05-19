@@ -7,7 +7,7 @@
   >
     <v-card>
       <v-toolbar color="primary">
-        <template #title> Product Details</template>
+        <template #title> Add New Product</template>
         <template #append>
           <v-btn icon="mdi-close" @click="$emit('update:model', false)">
           </v-btn>
@@ -42,6 +42,7 @@
                   v-model="localItem.price"
                   :rules="[rules.required, rules.number]"
                   label="Product Price"
+                  type="number"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -51,6 +52,7 @@
                   v-model="localItem.stock_quantity"
                   :rules="[rules.required, rules.number]"
                   label="Stock Quantity"
+                  type="number"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -61,6 +63,7 @@
                   v-model="localItem.stock_threshold"
                   :rules="[rules.required, rules.number]"
                   label="Stock Threshold"
+                  type="number"
                 ></v-text-field>
               </v-col>
             </v-row>

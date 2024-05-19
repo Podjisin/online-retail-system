@@ -1,15 +1,8 @@
-<!-- filename: LoginPage.vue -->
-
 <template>
-  <div>
-    <v-sheet
-      class="pa-10"
-      color="secondary"
-      height="100vh"
-      rounded
-      :theme="this.theme"
-    >
-      <v-img
+  <v-app :theme="theme">
+    <div>
+      <v-sheet class="pa-10" color="secondary" height="100vh" rounded>
+        <!-- <v-img
         alt="Vue.js logo"
         class="mx-auto mb-10"
         contain
@@ -19,84 +12,110 @@
       >
       </v-img>
       <h1 class="text-center text-white">Online Retail System</h1>
-      <p class="text-center text-white">Admin Application</p>
+      <p class="text-center text-white">Admin Application</p> -->
 
-      <v-container grid-list-xs>
-        <v-row>
-          <v-col>
-            <v-card class="mx-auto" max-width="400">
-              <v-form
-                ref="form"
-                v-model="form.model"
-                @submit.prevent="onsubmit"
+        <v-container grid-list-xs>
+          <v-row>
+            <v-col>
+              <v-img
+                alt="Vue.js logo"
+                class="mx-auto mb-10"
+                contain
+                height="64"
+                src="../assets/logo.png"
+                width="64"
               >
-                <v-container grid-list-xs dense>
-                  <v-row no-gutters>
-                    <v-col>
-                      <v-text-field
-                        v-model="form.username"
-                        class="mb-3"
-                        label="Username"
-                        :rules="[rules.required]"
-                      >
-                      </v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row no-gutters>
-                    <v-col>
-                      <v-text-field
-                        v-model="form.password"
-                        class="mb-3"
-                        label="Password"
-                        :rules="[rules.required]"
-                        :type="form.showPassword ? 'text' : 'password'"
-                        :append-inner-icon="
-                          form.showPassword ? 'mdi-eye-off' : 'mdi-eye'
-                        "
-                        @click:append-inner="
-                          form.showPassword = !form.showPassword
-                        "
-                      >
-                      </v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row no-gutters>
-                    <v-col>
-                      <v-btn
-                        block
-                        :loading="loading"
-                        :disabled="!form.model"
-                        color="success"
-                        size="large"
-                        type="submit"
-                        variant="elevated"
-                      >
-                        Sign In
-                      </v-btn>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-form>
-            </v-card>
-          </v-col>
-        </v-row>
-        <v-row> </v-row>
-      </v-container>
-    </v-sheet>
-  </div>
-  <div>
-    <SnackBar
-      ref="SnackBar"
-      :snackbarTitle="snackbar.title"
-      :snackbarText="snackbar.text"
-      :color="snackbar.color"
-    >
-    </SnackBar>
-  </div>
+              </v-img>
+              <h1 class="text-center text-white">
+                Online Retail / Ordering System
+              </h1>
+              <p class="text-center text-white">Admin Application</p>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-card class="mx-auto" max-width="400">
+                <v-form
+                  ref="form"
+                  v-model="form.model"
+                  @submit.prevent="onsubmit"
+                >
+                  <v-container grid-list-xs dense>
+                    <v-row no-gutters>
+                      <v-col>
+                        <v-text-field
+                          v-model="form.username"
+                          class="mb-3"
+                          label="Username"
+                          :rules="[rules.required]"
+                        >
+                        </v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                      <v-col>
+                        <v-text-field
+                          v-model="form.password"
+                          class="mb-3"
+                          label="Password"
+                          :rules="[rules.required]"
+                          :type="form.showPassword ? 'text' : 'password'"
+                          :append-inner-icon="
+                            form.showPassword ? 'mdi-eye-off' : 'mdi-eye'
+                          "
+                          @click:append-inner="
+                            form.showPassword = !form.showPassword
+                          "
+                        >
+                        </v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                      <v-col>
+                        <v-btn
+                          block
+                          :loading="loading"
+                          :disabled="!form.model"
+                          color="success"
+                          size="large"
+                          type="submit"
+                          variant="elevated"
+                        >
+                          Sign In
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-form>
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-row> </v-row>
+        </v-container>
+      </v-sheet>
+    </div>
+    <!-- <div>
+      <SnackBar
+        ref="SnackBar"
+        :snackbarTitle="snackbar.title"
+        :snackbarText="snackbar.text"
+        :color="snackbar.color"
+      >
+      </SnackBar>
+    </div> -->
+
+    <VSonner :duration="toast.duration" :visible-toasts="toast.visible">
+    </VSonner>
+    <FooterBar></FooterBar>
+  </v-app>
 </template>
 
 <script>
-import SnackBar from "@/components/SnackBar.vue";
+import { VSonner, toast } from "vuetify-sonner";
+
+// import SnackBar from "@/components/SnackBar.vue";
+import FooterBar from "@/layouts/default/FooterBar.vue";
+
 import { useAppStore, useCredentialsStore } from "@/store/app";
 import { useTheme } from "vuetify/lib/framework.mjs";
 export default {
@@ -111,6 +130,11 @@ export default {
 
     theme: "light",
 
+    toast: {
+      duration: 2000,
+      visible: 5,
+    },
+
     form: {
       model: false,
       username: null,
@@ -122,7 +146,16 @@ export default {
     },
   }),
   components: {
-    SnackBar,
+    // SnackBar,
+    VSonner,
+    FooterBar,
+  },
+
+  watch: {
+    "appStore.theme.default"(newValue) {
+      this.theme = newValue;
+      // console.log("Theme Changed:", newValue);
+    },
   },
 
   methods: {
@@ -137,18 +170,21 @@ export default {
 
     async login() {
       try {
-        console.log("Logging in");
+        // console.log("Logging in");
         const credentials = useCredentialsStore();
         await credentials.login(this.form.username, this.form.password);
         const loginState = credentials.isLoggedIn;
-        console.log(loginState);
+        // console.log(loginState);
         if (loginState) {
           this.loading = false;
           this.form.model = false;
-          this.snackbar.title = "Login Successful";
-          this.snackbar.text = "Redirecting...";
-          this.snackbar.color = "success";
-          this.$refs.SnackBar.value = true;
+          toast("Sucess", {
+            description: `Logging in`,
+            prependIcon: "mdi-check-circle-outline",
+            cardProps: {
+              color: "success",
+            },
+          });
           this.resetFields();
 
           await this.$router.push({
@@ -158,14 +194,23 @@ export default {
           const appStore = useAppStore();
           appStore.setHeaderBarTitle("Dashboard");
         } else {
-          this.loading = false;
-          this.snackbar.title = "Login Failed";
-          this.snackbar.text = "Incorrect Username or Password";
-          this.snackbar.color = "error";
-          this.$refs.SnackBar.value = true;
+          toast("Error", {
+            description: `Failed to login`,
+            prependIcon: "mdi-alert-circle-outline",
+            cardProps: {
+              color: "error",
+            },
+          });
         }
       } catch (err) {
         console.log(err);
+        toast("Error", {
+          description: err,
+          prependIcon: "mdi-alert-circle-outline",
+          cardProps: {
+            color: "error",
+          },
+        });
       }
     },
 
@@ -173,7 +218,7 @@ export default {
       const appStore = useAppStore();
       const theme = useTheme();
       theme.global.name.value = appStore.theme;
-      console.log(theme.global.name.value);
+      // console.log(theme.global.name.value);
     },
 
     async resetFields() {
@@ -184,7 +229,7 @@ export default {
 
   created() {
     const appStore = useAppStore();
-    this.theme = appStore.theme;
+    this.theme = appStore.theme.default;
   },
 };
 </script>

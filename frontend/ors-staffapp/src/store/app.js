@@ -11,7 +11,29 @@ import api from "@/services/api";
  */
 export const useAppStore = defineStore("app", {
   state: () => ({
-    theme: localStorage.getItem("theme") || "light",
+    theme: {
+      default: localStorage.getItem("theme") || "light",
+      items: [
+        // light: myCustomLightTheme,
+        // chocolate: myCustomChocolateTheme,
+        // bananaYellow: myCustomBananaYellowTheme,
+        // solarized: myCustomSolarizedTheme,
+        // blueViolet: myCustomBlueVioletTheme,
+        // helloKittyPink: myCustomHelloKittyPinkTheme,
+        // bluePink: BluePinkTheme,
+        // ksuPurple: KSUPurpleTheme,
+        "light",
+        "dark",
+        "system",
+        "bluePink",
+        "ksuPurple",
+        "chocolate",
+        "bananaYellow",
+        "solarized",
+        "blueViolet",
+        "helloKittyPink",
+      ],
+    },
 
     settings: {
       currency: localStorage.getItem("currency") || "Php",
@@ -44,6 +66,54 @@ export const useAppStore = defineStore("app", {
               localStorage.setItem("headerBarTitle") || "Dashboard";
           },
         },
+
+        {
+          title: "Inventory",
+          icon: "mdi-warehouse",
+          to: {
+            name: "InventoryPage",
+          },
+          onClick: () => {
+            this.headerBar.title =
+              localStorage.setItem("headerBarTitle") || "Inventory";
+          },
+        },
+        {
+          title: "Customer",
+          icon: "mdi-account-multiple",
+          to: {
+            name: "CustomerPage",
+          },
+          onClick: () => {
+            this.headerBar.title =
+              localStorage.setItem("headerBarTitle") || "Customer";
+          },
+        },
+        {
+          title: "Orders",
+          icon: "mdi-room-service",
+          to: {
+            name: "OrdersPage",
+          },
+          onClick: () => {
+            this.headerBar.title =
+              localStorage.setItem("headerBarTitle") || "Orders";
+          },
+        },
+        {
+          title: "Promotions",
+          icon: "mdi-ticket",
+          to: {
+            name: "PromotionsPage",
+          },
+          onClick: () => {
+            this.headerBar.title =
+              localStorage.setItem("headerBarTitle") || "Promotions";
+          },
+        },
+        // {
+        //   title: "divider",
+        // },
         {
           title: "Profile",
           icon: "mdi-account",
@@ -56,17 +126,25 @@ export const useAppStore = defineStore("app", {
           },
         },
         {
-          title: "Inventory",
-          icon: "mdi-view-grid",
+          title: "Settings",
+          icon: "mdi-cog",
           to: {
-            name: "InventoryPage",
+            name: "SettingsPage",
           },
           onClick: () => {
             this.headerBar.title =
-              localStorage.setItem("headerBarTitle") || "Inventory";
+              localStorage.setItem("headerBarTitle") || "Settings";
           },
         },
       ],
+    },
+
+    // Snackbar store
+    notifications: {
+      model: false,
+      text: "",
+      color: "info",
+      timeout: 3000,
     },
   }),
 
@@ -76,9 +154,10 @@ export const useAppStore = defineStore("app", {
      *
      * @param {string} value - The theme value to set.
      */
-    toggleTheme(value) {
-      this.theme = value;
-      localStorage.setItem("theme", this.theme);
+    updateTheme(value) {
+      console.log("Theme: " + this.theme.default);
+      this.theme.default = value;
+      localStorage.setItem("theme", this.theme.default);
     },
 
     setHeaderBarTitle(title) {
@@ -119,6 +198,19 @@ export const useAppStore = defineStore("app", {
 
     setNavigatorBarRail(boolean) {
       this.navigatorBar.rail = boolean;
+    },
+
+    // Snackbar notifications
+    async showSnackbar(text, color, timeout) {
+      this.notifications.model = true;
+      this.notifications.text = text;
+      this.notifications.color = color;
+      this.notifications.timeout = timeout;
+
+      setTimeout(() => {
+        this.notifications.model = false;
+      }, timeout);
+      console.log("Snackbar: " + text + " " + color + " " + timeout);
     },
   },
 });
@@ -174,7 +266,7 @@ export const useProductStore = defineStore("products", {
         const response = await api.get("public/inventory/");
         this.inventory = response.data;
         console.log("STORE getProducts | Response: ", response.data);
-        return true;
+        return response.data;
       } catch (error) {
         console.log("STORE getProducts | ERROR: ", error);
         return error.response;
@@ -185,7 +277,7 @@ export const useProductStore = defineStore("products", {
       try {
         const response = await api.post("public/inventory/", item);
         console.log("STORE postItem | Response: ", response.data);
-        return true;
+        return response.data;
       } catch (error) {
         console.log("STORE postItem | ERROR: ", error);
         return error.response;
@@ -212,10 +304,96 @@ export const useProductStore = defineStore("products", {
           data
         );
         console.log("STORE updateItem | Response: ", response.data);
-        return true;
+        return response.data;
       } catch (error) {
         console.log("STORE updateItem | ERROR: ", error);
         return error;
+      }
+    },
+  },
+});
+
+export const useCustomerStore = defineStore("customers", {
+  state: () => ({
+    customers: [],
+    totalCustomers: 0,
+    customer: {},
+    customer_id: null || localStorage.getItem("customer_id"),
+  }),
+
+  actions: {
+    async getAllCustomers() {
+      try {
+        const response = await api.get("public/customers/");
+        this.customers = response.data;
+        console.log(
+          "STORE getAllCustomers | Response: ",
+          response.data,
+          " Length: ",
+          response.data.length
+        );
+
+        const res = {
+          totalCustomers: response.data.length,
+          customers: response.data,
+        };
+
+        return res;
+      } catch (error) {
+        console.log("STORE getAllCustomers | ERROR: ", error);
+      }
+    },
+
+    setCustomer(customer_id) {
+      this.customer_id = customer_id;
+      localStorage.setItem("customer_id", customer_id);
+      const res = {
+        customer_id: customer_id,
+      };
+
+      return res;
+    },
+
+    async getCustomerDetails(customer_id) {
+      try {
+        if (!customer_id || customer_id === "" || customer_id === null) {
+          customer_id = localStorage.getItem("customer_id");
+        }
+
+        console.log("STORE getCustomerDetails | Customer ID: ", customer_id);
+        const response = await api.get(
+          "public/customers/details/" + customer_id
+        );
+        this.customer = response.data;
+        console.log("STORE getCustomerDetails | Response: ", response.data);
+        return true;
+      } catch (error) {
+        console.log("STORE getCustomerDetails | ERROR: ", error);
+      }
+    },
+
+    async addCustomer(item) {
+      try {
+        const response = await api.post("public/customers/register", item);
+        this.customer = response.data;
+        console.log("STORE addCustomer | Response: ", response.data);
+        return true;
+      } catch (error) {
+        console.log("STORE addCustomer | ERROR: ", error);
+      }
+    },
+
+    async updateCustomer(item) {
+      try {
+        const response = await api.put(
+          `public/customers/${item.customer_id}`,
+          item
+        );
+        this.customer = response.data;
+        console.log("STORE updateCustomer | Response: ", response.data);
+        return response.data;
+      } catch (error) {
+        console.log("STORE updateCustomer | ERROR: ", error);
       }
     },
   },

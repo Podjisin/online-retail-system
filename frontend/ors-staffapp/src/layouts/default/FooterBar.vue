@@ -1,5 +1,6 @@
 <template>
-  <v-footer class="bg-indigo-lighten-1 text-center d-flex flex-column">
+  <!-- <v-footer class="bg-indigo-lighten-1 text-center d-flex flex-column"> -->
+  <v-footer class="text-center d-flex flex-column" absolute>
     <div>
       <v-btn
         v-for="icon in icons"
@@ -10,7 +11,7 @@
       ></v-btn>
     </div>
 
-    <div class="pt-0">
+    <!-- <div class="pt-0">
       Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris
       cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id
       ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui.
@@ -18,7 +19,7 @@
       Nulla placerat augue vel ipsum ultrices, cursus iaculis dui sollicitudin.
       Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius
       natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-    </div>
+    </div> -->
 
     <v-divider thickness="2"></v-divider>
 
@@ -33,10 +34,10 @@
 export default {
   data: () => ({
     icons: [
-      "mdi-facebook",
-      "mdi-twitter",
-      "mdi-linkedin",
-      "mdi-instagram",
+      // "mdi-facebook",
+      // "mdi-twitter",
+      // "mdi-linkedin",
+      // "mdi-instagram",
       "mdi-github",
     ],
   }),

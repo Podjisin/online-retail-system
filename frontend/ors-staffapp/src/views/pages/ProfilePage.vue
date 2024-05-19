@@ -5,6 +5,7 @@
         <v-row>
           <v-col> <h2>Account</h2> </v-col>
           <v-divider></v-divider>
+          <br />
         </v-row>
         <v-row>
           <v-col cols="12" md="6">
@@ -29,6 +30,12 @@
         </v-row>
       </v-container>
     </v-form>
+    <v-divider></v-divider>
+    <v-card-actions>
+      <v-btn color="success" prepend-icon="mdi-content-save" block>
+        save
+      </v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 

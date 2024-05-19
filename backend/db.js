@@ -1,4 +1,5 @@
 const mysql = require("mysql2");
+// const mysql = require("mysql2/promise");
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -14,6 +15,7 @@ try {
     timezone: "+00:00",
 
     idleTimeout: 60000,
+    enableKeepAlive: true,
   });
 
   db.connect((err) => {

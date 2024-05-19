@@ -19,16 +19,50 @@ const createFile = () => {
   }
 };
 
+const dateNow = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  const second = date.getSeconds();
+  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+};
+
 const getApiKeyType = async (apiKey) => {
   const sql = `SELECT type FROM api_keys WHERE api_key = ?`;
   const params = [apiKey];
-  const rows = await db.query(sql, params);
-  if (rows.length > 0) {
-    const apiKeyType = rows[0].type;
-    return apiKeyType;
+  try {
+    db.query(sql, params, (err, result) => {
+      if (err || result.length === 0) {
+        console.error(err);
+        return "invalid";
+      } else {
+        console.log(result[0].type);
+        return result[0].type;
+      }
+    });
+  } catch (error) {
+    console.error(error);
   }
-  return null; // Return null if no matching API key is found
 };
+
+// const getApiKeyType = async (apiKey) => {
+//   const sql = `SELECT type FROM api_keys WHERE api_key = ?`;
+//   const params = [apiKey];
+//   try {
+//     const [rows] = await db.query(sql, params);
+//     if (rows.length > 0) {
+//       return rows[0].type;
+//     } else {
+//       return "invalid";
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     return "invalid";
+//   }
+// };
 
 /**
  * @name logRequest
@@ -39,13 +73,21 @@ const getApiKeyType = async (apiKey) => {
  */
 
 const logRequest = async (req, res, next) => {
-  const apiKey = req.headers["x-api-key"];
-  // const apiKeyType = await getApiKeyType(apiKey);
   createFile();
+
+  // console.log(req);
+  const apiKey = req.headers["x-api-key"];
+  const apiKeyType = await getApiKeyType(apiKey);
   // Log request details to the log file
-  const logMessage = `${new Date().toISOString()} - API Key: ${apiKey} - - URL: ${
+
+  // const logMessage = `[${dateNow()}] - API Key: ${apiKey} - Type: ${apiKeyType} - URL: ${
+  //   req.originalUrl
+  // } - Method: ${req.method}`;
+
+  const logMessage = `[${dateNow()}] - API Key: ${apiKey} - URL: ${
     req.originalUrl
   } - Method: ${req.method}`;
+
   res.on("finish", () => {
     const statusCode = res.statusCode;
     const granted =
